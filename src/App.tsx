@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Menu from "./Menu";
 import { landingPageDTO } from "./movies/movies.module";
 import MoviesList from "./movies/MoviesList";
 
@@ -34,12 +35,15 @@ function App() {
   });
 
   return (
-    <div className="container">
-      <h3>In Theaters</h3>
-      <MoviesList movies={movies.inTheaters} />
-      <h3>Upcoming Releases</h3>
-      <MoviesList movies={movies.upcomingReleases} />
-    </div>
+    <>
+    <Menu/>
+      <div className="container">
+        <h3>In Theaters</h3>
+        <MoviesList movies={movies.inTheaters} />
+        <h3>Upcoming Releases</h3>
+        <MoviesList movies={movies.upcomingReleases} />
+      </div>
+    </>
   );
 }
 
