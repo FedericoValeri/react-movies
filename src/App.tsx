@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { landingPageDTO, movieDTO } from "./movies/movies.module";
+import { landingPageDTO } from "./movies/movies.module";
 import MoviesList from "./movies/MoviesList";
 
 function App() {
@@ -34,12 +34,12 @@ function App() {
   });
 
   return (
-    <>
+    <div className="container">
       <h3>In Theaters</h3>
       <MoviesList movies={movies.inTheaters} />
       <h3>Upcoming Releases</h3>
       <MoviesList movies={movies.upcomingReleases} />
-    </>
+    </div>
   );
 }
 
