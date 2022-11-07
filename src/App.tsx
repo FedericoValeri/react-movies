@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import IndexGenres from "./genres/IndexGenres";
 import Menu from "./Menu";
 import { landingPageDTO } from "./movies/movies.module";
 import MoviesList from "./movies/MoviesList";
@@ -35,15 +37,23 @@ function App() {
   });
 
   return (
-    <>
-    <Menu/>
+    <BrowserRouter>
+      <Menu />
       <div className="container">
-        <h3>In Theaters</h3>
-        <MoviesList movies={movies.inTheaters} />
-        <h3>Upcoming Releases</h3>
-        <MoviesList movies={movies.upcomingReleases} />
+        <Switch>
+          <Route exact path="/">
+            <h3>In Theaters</h3>
+            <MoviesList movies={movies.inTheaters} />
+            <h3>Upcoming Releases</h3>
+            <MoviesList movies={movies.upcomingReleases} />
+          </Route>
+
+          <Route path="/genres">
+            <IndexGenres />
+          </Route>
+        </Switch>
       </div>
-    </>
+    </BrowserRouter>
   );
 }
 
