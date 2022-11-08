@@ -1,3 +1,8 @@
 export interface genreCreationDTO {
-  name: stringify;
+  name: string;
+}
+
+export interface genreDTO {
+  id: number;
+  name: string;
 }
