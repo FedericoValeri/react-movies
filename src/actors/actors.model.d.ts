@@ -3,4 +3,5 @@ export interface actorCreateDTO {
   dateOfBirth?: Date;
   picture?: File;
   pictureURL?: string;
+  biography?: string;
 }
