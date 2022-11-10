@@ -13,6 +13,7 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { genreDTO } from "../genres/genres.model";
 import { movieTheaterDTO } from "../movieTheaters/movieTheater.model";
+import TypeaheadActor from "../forms/TypeaheadActors";
 
 export default function MovieForm(props: movieFormProps) {
   const [selectedGenres, setSelectedGenres] = useState(
@@ -80,6 +81,7 @@ export default function MovieForm(props: movieFormProps) {
               setNonSelectedMovieTheaters(nonSelected);
             }}
           />
+          <TypeaheadActor displayName="Actors" actors={[]} />
           <Button disabled={formikProps.isSubmitting} type="submit">
             Save Changes
           </Button>
