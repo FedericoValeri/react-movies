@@ -1,4 +1,4 @@
-import { movieDTO } from "./movies.module";
+import { movieDTO } from "./movies.model";
 import css from './movie.module.css';
 
 export default function Movie(props: movieDTO) {

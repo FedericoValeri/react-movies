@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { landingPageDTO } from "./movies.module";
+import { landingPageDTO } from "./movies.model";
 import MoviesList from "./MoviesList";
 
 export default function LandingPage() {
