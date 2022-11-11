@@ -1,4 +1,5 @@
 import { Typeahead } from "react-bootstrap-typeahead";
+import { ReactElement } from "react-markdown/lib/react-markdown";
 import { actorMovieDTO } from "../actors/actors.model";
 
 export default function TypeaheadActor(props: typeaheadActorProps) {
@@ -26,20 +27,54 @@ export default function TypeaheadActor(props: typeaheadActorProps) {
     },
   ];
 
+  const selected: actorMovieDTO[] = [];
+
   return (
     <div className="mb-3">
       <label>{props.displayName}</label>
       <Typeahead
         id="typeahed"
-        onChange={(actor) => {
-          console.log(actor);
+        onChange={(actors) => {
+          if (props.actors.findIndex((a) => a.id === actors[0].id) === -1) {
+            props.onAdd([...props.actors, actors[0]]);
+          }
+          console.log(actors);
         }}
         options={actors}
-        labelKey="name"
+        labelKey={(actor) => actor.name}
         filterBy={["name"]}
-        placeholder="Write the name of the actor..."
+        placeholder="Type actor..."
         minLength={1}
+        flip={true}
+        selected={selected}
+        renderMenuItemChildren={(actor) => (
+          <>
+            <img
+              src={actor.picture}
+              alt="actor"
+              style={{ height: "64px", width: "64px", marginRight: "10px" }}
+            />
+            <span>{actor.name}</span>
+          </>
+        )}
       />
+      <ul className="list-group">
+        {props.actors.map((actor) => (
+          <li
+            className="list-group-item list-group-item-action"
+            key={actor.name}
+          >
+            {props.listUI(actor)}
+            <span
+              className="badge badge-primary badge-pill text-dark pointer"
+              style={{ marginLeft: "0.5rem" }}
+              onClick={() => props.onRemove(actor)}
+            >
+              X
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -47,4 +82,7 @@ export default function TypeaheadActor(props: typeaheadActorProps) {
 interface typeaheadActorProps {
   displayName: string;
   actors: actorMovieDTO[];
+  onAdd(actors: actorMovieDTO[]): void;
+  onRemove(actors: actorMovieDTO): void;
+  listUI(actor: actorMovieDTO): ReactElement;
 }
