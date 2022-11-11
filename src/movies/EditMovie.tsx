@@ -1,3 +1,4 @@
+import { actorMovieDTO } from "../actors/actors.model";
 import { genreDTO } from "../genres/genres.model";
 import { movieTheaterDTO } from "../movieTheaters/movieTheater.model";
 import MovieForm from "./MovieForm";
@@ -10,6 +11,15 @@ export default function EditMovie() {
   ];
   const nonSelectedMovieTheaters: movieTheaterDTO[] = [
     { id: 2, name: "Uci Cinemas" },
+  ];
+  const selectedActors: actorMovieDTO[] = [
+    {
+      id: 1,
+      name: "Tom Holland",
+      character: "Peter Parker",
+      picture:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Tom_Holland_by_Gage_Skidmore.jpg/220px-Tom_Holland_by_Gage_Skidmore.jpg",
+    },
   ];
 
   return (
@@ -27,7 +37,7 @@ export default function EditMovie() {
         nonSelectedGenres={nonSelectedGenres}
         selectedMovieTheaters={selectedMovieTheaters}
         nonSelectedMovieTheaters={nonSelectedMovieTheaters}
-        selectedActors={[]}
+        selectedActors={selectedActors}
       />
     </>
   );
