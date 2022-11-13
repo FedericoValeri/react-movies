@@ -64,7 +64,7 @@ export default function Pagination(props: paginationProps) {
 
   return (
     <nav>
-      <ul className="pagiantion justify-content-center">
+      <ul className="pagination justify-content-center">
         {linkModels.map((link) => (
           <li
             key={link.text}
@@ -92,3 +92,7 @@ interface paginationProps {
   radio: number;
   onChange(page: number): void;
 }
+
+Pagination.defaultProps = {
+  radio: 3,
+};
