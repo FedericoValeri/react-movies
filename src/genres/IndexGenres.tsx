@@ -59,7 +59,10 @@ export default function IndexGenres() {
             {genres?.map((genre) => (
               <tr key={genre.id}>
                 <td>
-                  <Link className="btn btn-info" to={`/genres/${genre.id}`}>
+                  <Link
+                    className="btn btn-info"
+                    to={`/genres/edit/${genre.id}`}
+                  >
                     Edit
                   </Link>
                   <Button className="btn btn-danger">Delete</Button>
