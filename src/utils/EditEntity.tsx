@@ -19,9 +19,13 @@ export default function EditEntity<TCreation, TRead>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  async function edit(entityToEdit: TCreation) {
-    await axios
-      .put(`${props.url}/${id}`, entityToEdit)
+  async function axiosPutRequest(entityToEdit: TCreation, formData?: FormData) {
+    await axios({
+      method: "put",
+      url: `${props.url}/${id}`,
+      data: formData ? formData : entityToEdit,
+      headers: formData ? { "Content-Type": "multipart/form-data" } : undefined,
+    })
       .then(() => {
         history.push(props.indexURL);
       })
@@ -41,6 +45,16 @@ export default function EditEntity<TCreation, TRead>(
         }
       });
   }
+
+  async function edit(entityToEdit: TCreation) {
+    if (props.transformFormData) {
+      const formData = props.transformFormData(entityToEdit);
+      await axiosPutRequest(entityToEdit, formData);
+    } else {
+      await axiosPutRequest(entityToEdit);
+    }
+  }
+
   return (
     <>
       <h3>Edit {props.entityName}</h3>
@@ -55,6 +69,7 @@ interface editEntityProps<TCreation, TRead> {
   entityName: string;
   indexURL: string;
   transform(entity: TRead): TCreation;
+  transformFormData?(model: TCreation): FormData;
   children(entity: TCreation, edit: (entity: TCreation) => void): ReactElement;
 }
 

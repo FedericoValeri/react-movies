@@ -35,7 +35,7 @@ export default function ImageField(props: imageFieldProps) {
 
   return (
     <div className="mb-3">
-      <label htmlFor="">{props.displayName}</label>
+      <label>{props.displayName}</label>
       <div>
         <input type="file" accept=".jpg,.jpeg,.png" onChange={handleOnChange} />
       </div>

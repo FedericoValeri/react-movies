@@ -19,7 +19,7 @@ export default function IndexActors() {
             </tr>
           </thead>
           <tbody>
-            {actors.map((actor) => (
+            {actors?.map((actor) => (
               <tr key={actor.id}>
                 <td>{buttons(`actors/edit/${actor.id}`, actor.id)}</td>
                 <td>{actor.name}</td>
