@@ -1,38 +1,27 @@
+import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
-import { Typeahead } from "react-bootstrap-typeahead";
+import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { actorMovieDTO } from "../actors/actors.model";
+import { urlActors } from "../endpoint";
 
 export default function TypeaheadActor(props: typeaheadActorProps) {
-  const actors: actorMovieDTO[] = [
-    {
-      id: 1,
-      name: "Tom Holland",
-      character: "",
-      picture:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Tom_Holland_by_Gage_Skidmore.jpg/220px-Tom_Holland_by_Gage_Skidmore.jpg",
-    },
-    {
-      id: 2,
-      name: "Cate Blanchett",
-      character: "",
-      picture:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Cate_Blanchett_Cannes_2018_2_%28cropped%29.jpg/200px-Cate_Blanchett_Cannes_2018_2_%28cropped%29.jpg",
-    },
-    {
-      id: 3,
-      name: "George Clooney",
-      character: "",
-      picture:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/George_Clooney_2016.jpg/220px-George_Clooney_2016.jpg",
-    },
-  ];
-
+  const [actors, setActors] = useState<actorMovieDTO[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const selected: actorMovieDTO[] = [];
-
   const [draggedElement, setDraggedElement] = useState<
     actorMovieDTO | undefined
   >(undefined);
+
+  function handleSearch(query: string) {
+    setIsLoading(true);
+    axios
+      .get(`${urlActors}/searchByName/${query}`)
+      .then((response: AxiosResponse<actorMovieDTO[]>) => {
+        setActors(response.data);
+        setIsLoading(false);
+      });
+  }
 
   function handleDragStart(actor: actorMovieDTO) {
     setDraggedElement(actor);
@@ -57,17 +46,19 @@ export default function TypeaheadActor(props: typeaheadActorProps) {
   return (
     <div className="mb-3">
       <label>{props.displayName}</label>
-      <Typeahead
+      <AsyncTypeahead
         id="typeahed"
         onChange={(actors) => {
           if (props.actors.findIndex((a) => a.id === actors[0].id) === -1) {
+            actors[0].character = "";
             props.onAdd([...props.actors, actors[0]]);
           }
-          console.log(actors);
         }}
         options={actors}
         labelKey={(actor) => actor.name}
-        filterBy={["name"]}
+        filterBy={() => true}
+        isLoading={isLoading}
+        onSearch={handleSearch}
         placeholder="Type actor..."
         minLength={1}
         flip={true}
