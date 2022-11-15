@@ -19,7 +19,7 @@ export default function IndexMovieTheaters() {
             </tr>
           </thead>
           <tbody>
-            {movieTheaters?.map((movieTheater) => (
+            {movieTheaters?.map((movieTheater) => (              
               <tr key={movieTheater.id}>
                 <td>
                   {buttons(
