@@ -1,12 +1,38 @@
-import { Link } from "react-router-dom";
+import { urlMovieTheaters } from "../endpoint";
+import IndexEntity from "../utils/IndexEntity";
+import { movieTheaterDTO } from "./movieTheater.model";
 
 export default function IndexMovieTheaters() {
   return (
-    <>
-      <h3>Movie Theaters</h3>
-      <Link className="btn btn-primary" to="/movietheaters/create">
-        Create
-      </Link>
-    </>
+    <IndexEntity<movieTheaterDTO>
+      url={urlMovieTheaters}
+      createURL="movietheaters/create"
+      title="Movie Theaters"
+      entityName="Movie Theater"
+    >
+      {(movieTheaters, buttons) => (
+        <>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {movieTheaters?.map((movieTheater) => (
+              <tr key={movieTheater.id}>
+                <td>
+                  {buttons(
+                    `movietheaters/edit/${movieTheater.id}`,
+                    movieTheater.id
+                  )}
+                </td>
+                <td>{movieTheater.name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </>
+      )}
+    </IndexEntity>
   );
 }
