@@ -1,30 +1,45 @@
+import axios, { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
+import { urlMovies } from "../endpoint";
 import { genreDTO } from "../genres/genres.model";
 import { movieTheaterDTO } from "../movieTheaters/movieTheater.model";
+import Loading from "../utils/Loading";
 import MovieForm from "./MovieForm";
+import { moviesPostGetDTO } from "./movies.model";
 
 export default function CreateMovie() {
-  const nonSelectedGenres: genreDTO[] = [
-    { id: 1, name: "Comedy" },
-    { id: 2, name: "Drama" },
-  ];
+  const [nonSelectedGenres, setNonSelectedGenres] = useState<genreDTO[]>([]);
+  const [nonSelectedMovieTheaters, setNonSelectedMovieTheaters] = useState<
+    movieTheaterDTO[]
+  >([]);
+  const [loading, setLoading] = useState(true);
 
-  const nonSelectedMovieTheaters: movieTheaterDTO[] = [
-    { id: 1, name: "Giometti" },
-    { id: 2, name: "Uci Cinemas" },
-  ];
+  useEffect(() => {
+    axios
+      .get(`${urlMovies}/postget`)
+      .then((response: AxiosResponse<moviesPostGetDTO>) => {
+        setNonSelectedGenres(response.data.genres);
+        setNonSelectedMovieTheaters(response.data.movieTheaters);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <>
       <h3>Create Movie</h3>
-      <MovieForm
-        model={{ title: "", inTheaters: false, trailer: "" }}
-        onSubmit={(values) => console.log(values)}
-        selectedGenres={[]}
-        nonSelectedGenres={nonSelectedGenres}
-        selectedMovieTheaters={[]}
-        nonSelectedMovieTheaters={nonSelectedMovieTheaters}
-        selectedActors={[]}
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <MovieForm
+          model={{ title: "", inTheaters: false, trailer: "" }}
+          onSubmit={(values) => console.log(values)}
+          selectedGenres={[]}
+          nonSelectedGenres={nonSelectedGenres}
+          selectedMovieTheaters={[]}
+          nonSelectedMovieTheaters={nonSelectedMovieTheaters}
+          selectedActors={[]}
+        />
+      )}
     </>
   );
 }
