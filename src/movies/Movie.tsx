@@ -1,16 +1,17 @@
 import { movieDTO } from "./movies.model";
-import css from './movie.module.css';
+import css from "./movie.module.css";
+import { Link } from "react-router-dom";
 
 export default function Movie(props: movieDTO) {
   const buildLink = () => `/movie/${props.id}`;
 
   return (
     <div className={css.div}>
-      <a href={buildLink()}>
+      <Link to={buildLink()}>
         <img src={props.poster} alt="Poster" />
-      </a>
+      </Link>
       <p>
-        <a href={buildLink()}>{props.title}</a>
+        <Link to={buildLink()}>{props.title}</Link>
       </p>
     </div>
   );

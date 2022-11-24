@@ -81,7 +81,7 @@ export default function MovieDetails() {
               height="315"
               src={generateEmbeddedVideoURL(movie.trailer)}
               frameBorder={0}
-              allow="accellerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
           </div>
