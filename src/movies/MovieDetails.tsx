@@ -127,7 +127,7 @@ export default function MovieDetails() {
       {movie.movieTheaters && movie.movieTheaters.length > 0 ? (
         <div>
           <h2>Showing on</h2>
-          <Map coordinates={transformCoordinates()} readOnly={true}/>
+          <Map coordinates={transformCoordinates()} readOnly={true} />
         </div>
       ) : null}
     </div>
