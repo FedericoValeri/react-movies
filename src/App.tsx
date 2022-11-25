@@ -10,7 +10,13 @@ configureValidations();
 
 function App() {
   const [claims, setClaims] = useState<claim[]>([]);
-
+  function isAdmin() {
+    return (
+      claims.findIndex(
+        (claim) => claim.name === "role" && claim.value === "admin"
+      ) > -1
+    );
+  }
   return (
     <BrowserRouter>
       <AuthenticationContext.Provider value={{ claims, update: setClaims }}>
@@ -19,7 +25,11 @@ function App() {
           <Switch>
             {routes.map((route) => (
               <Route key={route.path} path={route.path} exact={route.exact}>
-                <route.component />
+                {route.isAdmin && !isAdmin() ? (
+                  <>You are not allowed to see this page</>
+                ) : (
+                  <route.component />
+                )}
               </Route>
             ))}
           </Switch>
