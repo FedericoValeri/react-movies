@@ -7,6 +7,7 @@ import axios from "axios";
 import { urlMovies } from "../endpoint";
 import { useContext } from "react";
 import AlertContext from "../utils/AlertContext";
+import Authorize from "../auth/Authorize";
 
 export default function Movie(props: movieDTO) {
   const buildLink = () => `/movie/${props.id}`;
@@ -24,21 +25,28 @@ export default function Movie(props: movieDTO) {
       <p>
         <Link to={buildLink()}>{props.title}</Link>
       </p>
-      <div>
-        <Link
-          to={`/movies/edit/${props.id}`}
-          style={{ marginRight: "1rem" }}
-          className="btn btn-info"
-        >
-          Edit
-        </Link>
-        <Button
-          onClick={() => customConfirm(() => deleteMovie())}
-          className="btn btn-danger"
-        >
-          Delete
-        </Button>
-      </div>
+      <Authorize
+        role="admin"
+        authorized={
+          <>
+            <div>
+              <Link
+                to={`/movies/edit/${props.id}`}
+                style={{ marginRight: "1rem" }}
+                className="btn btn-info"
+              >
+                Edit
+              </Link>
+              <Button
+                onClick={() => customConfirm(() => deleteMovie())}
+                className="btn btn-danger"
+              >
+                Delete
+              </Button>
+            </div>
+          </>
+        }
+      />
     </div>
   );
 }

@@ -27,6 +27,7 @@ export default function LandingPage() {
       <Authorize
         authorized={<>You are authorized</>}
         notAuthorized={<>You are not authorized</>}
+        role="admin"
       />
 
       <h3>In Theaters</h3>
