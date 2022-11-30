@@ -5,14 +5,14 @@ import DisplayErrors from "../utils/DisplayErrors";
 import { authenticationResponse, userCredentials } from "./auth.models";
 import AuthForm from "./AuthForm";
 
-export default function Register() {
+export default function Login() {
   const [errors, setErrors] = useState<string[]>([]);
 
-  async function register(credentials: userCredentials) {
+  async function login(credentials: userCredentials) {
     setErrors([]);
     await axios
-      .post<authenticationResponse>(`${urlAccounts}/register`, credentials)
-      .then((response) => {
+      .post<authenticationResponse>(`${urlAccounts}/login`, credentials)
+      .then(function (response) {
         console.log(response.data);
       })
       .catch(function (error) {
@@ -34,11 +34,11 @@ export default function Register() {
 
   return (
     <>
-      <h3>Register</h3>
+      <h3>Login</h3>
       <DisplayErrors errors={errors} />
       <AuthForm
         model={{ email: "", password: "" }}
-        onSubmit={async (values) => await register(values)}
+        onSubmit={async (values) => await login(values)}
       />
     </>
   );
