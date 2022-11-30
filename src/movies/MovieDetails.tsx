@@ -2,7 +2,8 @@ import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Link, useParams } from "react-router-dom";
-import { urlMovies } from "../endpoint";
+import Swal from "sweetalert2";
+import { urlMovies, urlRatings } from "../endpoint";
 import coordinateDTO from "../utils/coordinates.model";
 import Loading from "../utils/Loading";
 import Map from "../utils/Map";
@@ -50,6 +51,12 @@ export default function MovieDetails() {
     return `https://www.youtube.com/embed/${videoId}`;
   }
 
+  function handleRate(rate: number) {
+    axios.post(urlRatings, { rating: rate, movieId: id }).then(() => {
+      Swal.fire({ icon: "success", title: "Rating received" });
+    });
+  }
+
   return movie ? (
     <div>
       <h2>
@@ -65,9 +72,8 @@ export default function MovieDetails() {
           {genre.name}
         </Link>
       ))}{" "}
-      | {movie.releaseDate.toDateString()}
-      | Your vote:{" "}
-      <Ratings maximumValue={5} selectedValue={0} onChange={() => {}} />
+      | {movie.releaseDate.toDateString()}| Your vote:{" "}
+      <Ratings maximumValue={5} selectedValue={0} onChange={handleRate} />
       <div style={{ display: "flex", marginTop: "1rem" }}>
         <span style={{ display: "inline-block", marginRight: "1rem" }}>
           <img
