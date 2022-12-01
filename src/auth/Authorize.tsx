@@ -4,7 +4,6 @@ import AuthenticationContext from "./AuthenticationContext";
 export default function Authorize(props: authorizeProps) {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const { claims } = useContext(AuthenticationContext);
-
   useEffect(() => {
     if (props.role) {
       const index = claims.findIndex(
